@@ -8,7 +8,6 @@
     <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <!-- 组装微信配置信息js文件-->
     <script>
-
         /**
          * Created by zhouli on 18/8/7
          * Email li.zhou@huilianyi.com
@@ -22,7 +21,6 @@
                 $.ajax({
                     type: "post",
                     url: "https://api.huilianyi.com/wechat-service/wechat/fw/getJsTicket",//此接口不需要token，此接口后端开发，后端签名
-                    // url: "/trial/public/getJsTicket",//此接口不需要token，此接口后端开发，后端签名
                     cache: false,
                     async: false,
                     contentType: "application/json; charset=utf-8",
@@ -110,10 +108,7 @@
                 });
             }
         }
-
-
         window.onload = function () {
-            console.log(wx)
             wxdata.get_jsapi_ticket();
         }
 
