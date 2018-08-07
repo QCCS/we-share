@@ -20,7 +20,7 @@
             get_jsapi_ticket: function () {
                 $.ajax({
                     type: "post",
-                    url: "https://api.huilianyi.com/wechat-service/wechat/fw/getJsTicket",//此接口不需要token，此接口后端开发，后端签名
+                    url: "https://api.huilianyi.com/trial/public/getJsTicket",//此接口不需要token，此接口后端开发，后端签名
                     cache: false,
                     async: false,
                     contentType: "application/json; charset=utf-8",
