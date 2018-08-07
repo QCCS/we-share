@@ -69,7 +69,7 @@
                 //配置微信信息
                 wx.config({
                     beta: true,
-                    debug: false,
+                    debug: true,
                     appId: $wx_account[0],  // 微信appid
                     timestamp: $wx_account[1], // 时间戳
                     nonceStr: $wx_account[2],  // 随机字符串
@@ -92,7 +92,7 @@
                         "title": $wx_share[3],   // 分享标题
                         success: function () {
                             // 分享成功可以做相应的数据处理
-                            //alert("分享成功");
+                            alert("分享成功");
                         }
                     };
                     wx.onMenuShareTimeline(shareData);
@@ -104,6 +104,7 @@
                     // config信息验证失败会执行error函数，如签名过期导致验证失败，
                     // 具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，
                     // 对于SPA可以在这里更新签名。
+                    alert("分享失败");
                     console.log("好像出错了！！");
                 });
             }
