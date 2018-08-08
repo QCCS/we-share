@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>微信分享demo</title>
-    <!-- 必须引入的文件-->
+    <!-- 必须引入的文件  这个与域名的协议保持一致-->
     <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
     <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <!-- 组装微信配置信息js文件-->
@@ -13,21 +14,19 @@
          * Email li.zhou@huilianyi.com
          */
         var wxdata = {
-            baseUrl: "https://console.huilianyi.com",//根据情况加上
             wx_account: [],
             wx_share: [],
-            wx_myuser: ["appid", "appsecret"],
             get_jsapi_ticket: function () {
                 $.ajax({
                     type: "post",
-                    url: "https://api.huilianyi.com/trial/public/getJsTicket",//此接口不需要token，此接口后端开发，后端签名
+                    url: "/trial/public/getJsTicket",//此接口不需要token，此接口后端开发，后端签名
                     cache: false,
                     async: false,
                     contentType: "application/json; charset=utf-8",
                     headers: {'Content-Type': 'application/json'},
                     data: JSON.stringify({
                         pUrl: window.location.href,
-                        timestamp: new Date().getTime()
+                        timestamp: parseInt(new Date().getTime() / 1000)
                     }),
                     success: function (data) {
                         console.log(data)
@@ -42,7 +41,7 @@
                         if (data) {
                             window.localStorage.jsTicketime = data.timestamp;
                             window.localStorage.jsticketNonceStr = data.nonceStr;
-                            wxdata.wx_account[0] = wxdata.wx_myuser[0];  // appid
+                            wxdata.wx_account[0] = data.corpid;  // appid
                             wxdata.wx_account[1] = data.timestamp;   // timestamp
                             wxdata.wx_account[2] = data.nonceStr; // noncestr
                             wxdata.wx_account[3] = data.signature;//后端签名 signature
@@ -67,8 +66,9 @@
             //分享配置
             config: function ($wx_account, $wx_share) {
                 //配置微信信息
+                //每一个信息都需要写对，正式环境不需要开启debug
                 wx.config({
-                    beta: true,
+//                    beta: true,
                     debug: true,
                     appId: $wx_account[0],  // 微信appid
                     timestamp: $wx_account[1], // 时间戳
@@ -92,7 +92,7 @@
                         "title": $wx_share[3],   // 分享标题
                         success: function () {
                             // 分享成功可以做相应的数据处理
-                            alert("分享成功");
+                            // alert("分享成功");
                         }
                     };
                     wx.onMenuShareTimeline(shareData);
@@ -104,7 +104,6 @@
                     // config信息验证失败会执行error函数，如签名过期导致验证失败，
                     // 具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，
                     // 对于SPA可以在这里更新签名。
-                    alert("分享失败");
                     console.log("好像出错了！！");
                 });
             }
@@ -116,7 +115,7 @@
     </script>
 </head>
 <body id="weixinshare">
-微信分享demo12
+微信分享demo1
 </body>
 </html>
 
